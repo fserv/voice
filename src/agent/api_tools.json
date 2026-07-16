@@ -1,0 +1,116 @@
+[
+  {
+    "id": "search_flights",
+    "name": "search_flights",
+    "description": "Search available airline flights between two airports on a date. Returns a numbered list of offers with airline, stops, and total price. Call this once you know origin, destination, and departure date.",
+    "method": "POST",
+    "url": "https://degrees-concord-says-las.trycloudflare.com/api/tools/search-flights",
+    "auth": {"type": "header", "credentials": {"header_name": "X-Tool-Key", "header_value": "tk_NPOQWBT78kC9pKGbLY-KFTJwc-tOM661"}},
+    "timeout": 45,
+    "parameters": [
+      {"name": "origin", "type": "string", "description": "Origin IATA airport code, e.g. JFK", "required": true, "location": "body"},
+      {"name": "destination", "type": "string", "description": "Destination IATA airport code, e.g. LAX", "required": true, "location": "body"},
+      {"name": "departure_date", "type": "string", "description": "Departure date, YYYY-MM-DD", "required": true, "location": "body"},
+      {"name": "return_date", "type": "string", "description": "Return date YYYY-MM-DD for round trips; omit for one-way", "required": false, "location": "body"},
+      {"name": "adults", "type": "number", "description": "Number of adult passengers (default 1)", "required": false, "location": "body"},
+      {"name": "cabin", "type": "string", "description": "Cabin: Y economy, C business, F first", "required": false, "location": "body"},
+      {"name": "session_id", "type": "string", "description": "The session id provided at the start of the conversation; pass it on every tool call", "required": false, "location": "body"}
+    ]
+  },
+  {
+    "id": "offer_details",
+    "name": "offer_details",
+    "description": "Get the full itinerary detail for one offer from the most recent search, by its offer number.",
+    "method": "POST",
+    "url": "https://degrees-concord-says-las.trycloudflare.com/api/tools/offer-details",
+    "auth": {"type": "header", "credentials": {"header_name": "X-Tool-Key", "header_value": "tk_NPOQWBT78kC9pKGbLY-KFTJwc-tOM661"}},
+    "timeout": 20,
+    "parameters": [
+      {"name": "offer_id", "type": "string", "description": "Offer number from the search results, e.g. 0, 1, 2", "required": true, "location": "body"},
+      {"name": "session_id", "type": "string", "description": "The conversation session id", "required": false, "location": "body"}
+    ]
+  },
+  {
+    "id": "book_flight",
+    "name": "book_flight",
+    "description": "Book a chosen flight offer and create a reservation (test PNR). Only call after the caller has picked an offer, given their name, and confirmed. Returns a confirmation record locator.",
+    "method": "POST",
+    "url": "https://degrees-concord-says-las.trycloudflare.com/api/tools/book-flight",
+    "auth": {"type": "header", "credentials": {"header_name": "X-Tool-Key", "header_value": "tk_NPOQWBT78kC9pKGbLY-KFTJwc-tOM661"}},
+    "timeout": 60,
+    "parameters": [
+      {"name": "offer_id", "type": "string", "description": "Offer number the caller chose", "required": true, "location": "body"},
+      {"name": "first", "type": "string", "description": "Passenger first/given name", "required": true, "location": "body"},
+      {"name": "last", "type": "string", "description": "Passenger last/surname", "required": true, "location": "body"},
+      {"name": "email", "type": "string", "description": "Passenger email for the confirmation", "required": false, "location": "body"},
+      {"name": "phone", "type": "string", "description": "Passenger phone number", "required": false, "location": "body"},
+      {"name": "session_id", "type": "string", "description": "The conversation session id", "required": false, "location": "body"}
+    ]
+  },
+  {
+    "id": "search_hotels",
+    "name": "search_hotels",
+    "description": "Search available hotels in a city for a check-in/check-out date range. Returns a numbered list of offers with hotel name, star rating, room type, nightly rate, and total price. Call this once you know the city, check-in date, and check-out date.",
+    "method": "POST",
+    "url": "https://degrees-concord-says-las.trycloudflare.com/api/tools/search-hotels",
+    "auth": {"type": "header", "credentials": {"header_name": "X-Tool-Key", "header_value": "tk_NPOQWBT78kC9pKGbLY-KFTJwc-tOM661"}},
+    "timeout": 45,
+    "parameters": [
+      {"name": "city", "type": "string", "description": "City name or city/airport code where the hotel should be, e.g. San Francisco or SFO", "required": true, "location": "body"},
+      {"name": "check_in", "type": "string", "description": "Check-in date, YYYY-MM-DD", "required": true, "location": "body"},
+      {"name": "check_out", "type": "string", "description": "Check-out date, YYYY-MM-DD", "required": true, "location": "body"},
+      {"name": "guests", "type": "number", "description": "Number of guests (default 2)", "required": false, "location": "body"},
+      {"name": "rooms", "type": "number", "description": "Number of rooms (default 1)", "required": false, "location": "body"},
+      {"name": "session_id", "type": "string", "description": "The conversation session id; pass it on every tool call", "required": false, "location": "body"}
+    ]
+  },
+  {
+    "id": "book_hotel",
+    "name": "book_hotel",
+    "description": "Book a chosen hotel offer from the most recent hotel search and create a reservation (test confirmation). Only call after the caller has picked an offer by its number, given their name, and confirmed. Returns a confirmation number.",
+    "method": "POST",
+    "url": "https://degrees-concord-says-las.trycloudflare.com/api/tools/book-hotel",
+    "auth": {"type": "header", "credentials": {"header_name": "X-Tool-Key", "header_value": "tk_NPOQWBT78kC9pKGbLY-KFTJwc-tOM661"}},
+    "timeout": 60,
+    "parameters": [
+      {"name": "offer_id", "type": "string", "description": "Hotel offer number the caller chose, e.g. 0, 1, 2", "required": true, "location": "body"},
+      {"name": "first", "type": "string", "description": "Guest first/given name", "required": true, "location": "body"},
+      {"name": "last", "type": "string", "description": "Guest last/surname", "required": true, "location": "body"},
+      {"name": "email", "type": "string", "description": "Guest email for the confirmation", "required": false, "location": "body"},
+      {"name": "phone", "type": "string", "description": "Guest phone number", "required": false, "location": "body"},
+      {"name": "session_id", "type": "string", "description": "The conversation session id", "required": false, "location": "body"}
+    ]
+  },
+  {
+    "id": "search_cars",
+    "name": "search_cars",
+    "description": "Search available rental cars at a pickup location for a pickup/drop-off date range. Returns a numbered list of offers with rental company, car type, transmission, daily rate, and total price. Call this once you know the pickup location, pickup date, and drop-off date.",
+    "method": "POST",
+    "url": "https://degrees-concord-says-las.trycloudflare.com/api/tools/search-cars",
+    "auth": {"type": "header", "credentials": {"header_name": "X-Tool-Key", "header_value": "tk_NPOQWBT78kC9pKGbLY-KFTJwc-tOM661"}},
+    "timeout": 45,
+    "parameters": [
+      {"name": "pickup_location", "type": "string", "description": "Pickup location city or airport code, e.g. SFO", "required": true, "location": "body"},
+      {"name": "pickup_date", "type": "string", "description": "Pickup date, YYYY-MM-DD", "required": true, "location": "body"},
+      {"name": "dropoff_date", "type": "string", "description": "Drop-off date, YYYY-MM-DD", "required": true, "location": "body"},
+      {"name": "session_id", "type": "string", "description": "The conversation session id; pass it on every tool call", "required": false, "location": "body"}
+    ]
+  },
+  {
+    "id": "book_car",
+    "name": "book_car",
+    "description": "Book a chosen rental-car offer from the most recent car search and create a reservation (test confirmation). Only call after the caller has picked an offer by its number, given their name, and confirmed. Returns a confirmation number.",
+    "method": "POST",
+    "url": "https://degrees-concord-says-las.trycloudflare.com/api/tools/book-car",
+    "auth": {"type": "header", "credentials": {"header_name": "X-Tool-Key", "header_value": "tk_NPOQWBT78kC9pKGbLY-KFTJwc-tOM661"}},
+    "timeout": 60,
+    "parameters": [
+      {"name": "offer_id", "type": "string", "description": "Car offer number the caller chose, e.g. 0, 1, 2", "required": true, "location": "body"},
+      {"name": "first", "type": "string", "description": "Driver first/given name", "required": true, "location": "body"},
+      {"name": "last", "type": "string", "description": "Driver last/surname", "required": true, "location": "body"},
+      {"name": "email", "type": "string", "description": "Driver email for the confirmation", "required": false, "location": "body"},
+      {"name": "phone", "type": "string", "description": "Driver phone number", "required": false, "location": "body"},
+      {"name": "session_id", "type": "string", "description": "The conversation session id", "required": false, "location": "body"}
+    ]
+  }
+]

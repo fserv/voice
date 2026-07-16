@@ -1,0 +1,87 @@
+[
+  {
+    "name": "set_session",
+    "direction": "app_to_agent",
+    "behavior": "notify",
+    "description": "Sent by the browser right after connecting. Payload {session_id}. Remember this session_id and pass it as the session_id parameter on every tool call."
+  },
+  {
+    "name": "show_flights",
+    "direction": "agent_to_app",
+    "description": "Send this right after search_flights returns so the browser can render the flight cards. Payload: {offers: [{offer_id, airline, stops, total_price, currency, summary}]}.",
+    "payload_schema": {
+      "type": "object",
+      "properties": {
+        "offers": {"type": "array", "items": {"type": "object"}}
+      }
+    }
+  },
+  {
+    "name": "show_booking",
+    "direction": "agent_to_app",
+    "description": "Send this after book_flight succeeds so the browser can show the confirmation. Payload: {record_locator, passenger, total_price, currency}.",
+    "payload_schema": {
+      "type": "object",
+      "properties": {
+        "record_locator": {"type": "string"},
+        "passenger": {"type": "string"},
+        "total_price": {"type": "number"},
+        "currency": {"type": "string"}
+      }
+    }
+  },
+  {
+    "name": "show_hotels",
+    "direction": "agent_to_app",
+    "description": "Send right after search_hotels returns to render hotel cards. Payload {offers:[{offer_id,name,brand_name,rating,room_type,nightly_rate,total_price,currency,summary}]}.",
+    "payload_schema": {
+      "type": "object",
+      "properties": {
+        "offers": {"type": "array", "items": {"type": "object"}}
+      }
+    }
+  },
+  {
+    "name": "show_hotel_booking",
+    "direction": "agent_to_app",
+    "description": "Send after book_hotel succeeds to show the confirmation. Payload {confirmation_number,guest,hotel_name,room_type,total_price,currency}.",
+    "payload_schema": {
+      "type": "object",
+      "properties": {
+        "confirmation_number": {"type": "string"},
+        "guest": {"type": "string"},
+        "hotel_name": {"type": "string"},
+        "room_type": {"type": "string"},
+        "total_price": {"type": "number"},
+        "currency": {"type": "string"}
+      }
+    }
+  },
+  {
+    "name": "show_cars",
+    "direction": "agent_to_app",
+    "description": "Send right after search_cars returns to render car cards. Payload {offers:[{offer_id,vendor_name,car_type,transmission,daily_rate,total_price,currency,summary}]}.",
+    "payload_schema": {
+      "type": "object",
+      "properties": {
+        "offers": {"type": "array", "items": {"type": "object"}}
+      }
+    }
+  },
+  {
+    "name": "show_car_booking",
+    "direction": "agent_to_app",
+    "description": "Send after book_car succeeds to show the confirmation. Payload {confirmation_number,driver,vendor_name,car_type,total_price,currency}.",
+    "payload_schema": {
+      "type": "object",
+      "properties": {
+        "confirmation_number": {"type": "string"},
+        "driver": {"type": "string"},
+        "vendor_name": {"type": "string"},
+        "car_type": {"type": "string"},
+        "total_price": {"type": "number"},
+        "currency": {"type": "string"}
+      }
+    }
+  }
+]
