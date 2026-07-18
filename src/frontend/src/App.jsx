@@ -243,12 +243,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <header>
-        <h1>✈️ Skylark</h1>
-        <p className="tagline">
-          Your voice travel agent — book flights, hotels, and rental cars by talking.
-        </p>
-      </header>
+        <img className="omegaphototop" src="/src/omegatop.png" alt="omega" loading="lazy"  />
 
       <div className="controls">
         {!connected ? (
@@ -353,7 +348,14 @@ export default function App() {
           )}
           {!carBooking && cars.map((o) => <CarCard key={o.offer_id} offer={o} />)}
         </section>
+
+
       </div>
+
+      <center>
+        <img className="omegaphotobot" src="/src/omegabottom.png" alt="omegabot" loading="lazy"  />
+      </center>
+
     </div>
   );
 }
